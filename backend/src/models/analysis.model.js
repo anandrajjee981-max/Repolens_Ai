@@ -17,13 +17,8 @@ const analysisSchema = new mongoose.Schema({
 readme: String,
   language: String,
 
-  summary: String,
 
-  strengths: [String],
 
-  weaknesses: [String],
-
-  suggestions: [String]
 
 }, {
   timestamps: true

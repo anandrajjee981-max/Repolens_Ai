@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken"
-import { usermodel } from "../models/user.model.js"
+import usermodel  from "../models/user.model.js"
 import bcrypt from "bcrypt"
 async function register(req,res){
   try {
@@ -25,7 +25,7 @@ res.status(201).json({message: "User created successfully", user: newuser})
 async function login(req,res){
   try {
     const {email,password} = req.body
-    const user = await usermodel.findOne({email})
+    const user = await usermodel.findOne({email}).select("+password")
     if(!user){
         return res.status(400).json({message: "Invalid credentials"})
     }
@@ -35,7 +35,7 @@ async function login(req,res){
     }   
     const token = jwt.sign({id: user._id},process.env.JWT_SECRET,{expiresIn: "1d"})
     res.cookie("token",token,{httpOnly: true})  
-    res.status(200).json({message: "Login successful", user})
+    res.status(200).json({message: "Login successful", user , token})
   }         
     catch (error) {
         res.status(500).json({message: "Internal server error"})

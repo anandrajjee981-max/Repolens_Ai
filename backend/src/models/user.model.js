@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { useActionState } from "react";
+
 //we have to make usermodel 
 const userschema = new mongoose.Schema({
 username:{
@@ -14,7 +14,8 @@ email:{
 },
 password:{
     type: String,
-    required: true
+    required: true,
+    select : false
 }
 
 
@@ -22,5 +23,5 @@ password:{
 })
 
 
-export const usermodel = mongoose.model("users",userschema)
-
+ const usermodel = mongoose.model("users",userschema)
+export default usermodel
