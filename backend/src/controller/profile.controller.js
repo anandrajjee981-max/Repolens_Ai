@@ -60,22 +60,45 @@ export async function createcard(req, res) {
     });
   }
 }
-export async function getcard(req,res){
-try{
+export async function getcard(req, res) {
+  try {
+    // 1. Grab the URL from query parameters: /api/card/repocontent?repourl=https://...
+    const repourl = req.query.repourl; 
 
+    if (!repourl) {
+      return res.status(400).json({ message: "repourl query parameter is required" });
+    }
 
+    const contents = await contentmodel.find({
+      $or: [
+        { user: req.user.id },
+        { repoUrl: repourl }
+      ]
+    });
+
+    if (!contents || contents.length === 0) {
+      return res.status(404).json({ message: "no contents found" });
+    }
+
+    return res.status(200).json({ message: "your contents", contents });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: "internal server error" });
+  }
 }
-catch(err){
-return res.status(500).json({
-  message : "internal server error"
+export  async function  getrepocard (req,res){
+try{
+const repocard = await profilemodel.find({user : req.user.id})
+if(!repocard){
+  return res.status(404).json({
+    message : "not found"
+  })
+}
+
+res.status(200).json({
+  message : "all saved contents",
+  repocard
 })
-
-}
-
-}
-
-export function getrepocard (req,res){
-try{
 
 
 }

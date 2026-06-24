@@ -1,16 +1,25 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../style/login.scss';
+import useauth from './hooks/useauth';
 
 const Login = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({ email: '', password: '' });
-
+const {handlelogin} = useauth()
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
+  async function handlesubmit(e){
+e.preventDefault()
+const res = await handlelogin(formData.email,formData.password)
+if(res){
+  navigate('/dashboard')
+}
+
+  }
 
   return (
     <div className="terminal-screen">
@@ -49,7 +58,7 @@ const Login = () => {
       
 
             {/* --- FORMS (Highly Visible Inputs) --- */}
-            <form className="terminal-form" autoComplete="off" onSubmit={(e) => e.preventDefault()}>
+            <form className="terminal-form" autoComplete="off" onSubmit={handlesubmit}>
               
               <div className="terminal-form__group">
                 <label className="terminal-form__label">EMAIL ADDRESS</label>
