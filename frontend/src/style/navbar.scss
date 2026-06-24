@@ -1,0 +1,256 @@
+$silver-flash: #f8fafc;
+$silver-dim: #94a3b8;
+$glow-purple: #a855f7;
+$glow-blue: #3b82f6;
+$void-solid: #020204;
+$void-clear: rgba(2, 2, 4, 0.7);
+
+$font-sans-ui: 'Inter', system-ui, -apple-system, sans-serif;
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  font-family: $font-sans-ui;
+  background-color: $void-clear;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+
+  &__container {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 1.2rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+  }
+
+  // --- Exclusive Tech Lens Icon & Logo ---
+  &__logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    z-index: 1010;
+
+    &-box {
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    &-svg {
+      width: 100%;
+      height: 100%;
+      filter: drop-shadow(0 0 6px rgba(168, 85, 247, 0.4));
+      transition: transform 0.4s ease;
+    }
+
+    &-core {
+      animation: coreGlow 2s infinite ease-in-out;
+    }
+
+    &-text {
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      color: $silver-flash;
+      background: linear-gradient(180deg, #ffffff 40%, #cbd5e1 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    &:hover .navbar__logo-svg {
+      transform: rotate(90deg);
+    }
+  }
+
+  // --- Clean Minimal Desktop Navigation (No ugly boxes) ---
+  &__links-center {
+    display: flex;
+    gap: 3rem;
+  }
+
+  &__link {
+    font-size: 0.88rem;
+    font-weight: 400;
+    color: $silver-dim;
+    text-decoration: none;
+    letter-spacing: 0.03em;
+    position: relative;
+    padding: 0.4rem 0;
+    transition: color 0.3s ease;
+
+    // Elegant animated underline line tracking system
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 1.5px;
+      background: linear-gradient(90deg, $glow-purple, $glow-blue);
+      transition: all 0.3s ease;
+      transform: translateX(-50%);
+    }
+
+    &:hover {
+      color: $silver-flash;
+      &::after {
+        width: 100%;
+      }
+    }
+
+    &--active {
+      color: $silver-flash !important;
+      font-weight: 500;
+      &::after {
+        width: 100% !important;
+        background: #ffffff !important;
+      }
+    }
+  }
+
+  // --- High Contrast Solid CTA Button ---
+  &__actions-right {
+    display: flex;
+    align-items: center;
+  }
+
+  &__btn-primary {
+    background: #ffffff;
+    border: none;
+    color: $void-solid;
+    padding: 0.6rem 1.5rem;
+    border-radius: 6px; // Sleek modern subtle radius over generic capsules
+    font-size: 0.84rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: 0 4px 20px rgba(255, 255, 255, 0.1);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+
+    svg {
+      width: 14px;
+      height: 14px;
+      transition: transform 0.3s ease;
+    }
+
+    &:hover {
+      background: #f1f5f9;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 24px rgba(255, 255, 255, 0.2);
+
+      svg {
+        transform: translateX(3px);
+      }
+    }
+  }
+
+  // --- Minimalist 2-Line Hamburger Menu ---
+  &__hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+    width: 22px;
+    height: 20px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 1010;
+
+    &-line {
+      width: 100%;
+      height: 2px;
+      background-color: $silver-flash;
+      border-radius: 2px;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    &--open {
+      gap: 0;
+      .navbar__hamburger-line:nth-child(1) { transform: rotate(45deg) translateY(0.5px); }
+      .navbar__hamburger-line:nth-child(2) { transform: rotate(-45deg) translateY(-0.5px); }
+    }
+  }
+
+  // --- Dark Mobile Drawer Overlay ---
+  &__mobile-drawer {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 100%;
+    height: 100vh;
+    background-color: $void-solid;
+    z-index: 1005;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+
+    &--open {
+      right: 0;
+    }
+  }
+
+  &__mobile-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2.2rem;
+    width: 100%;
+  }
+
+  &__mobile-link {
+    font-size: 1.4rem;
+    color: $silver-dim;
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    transition: color 0.3s ease;
+
+    &:hover, &--active {
+      color: $silver-flash;
+    }
+  }
+
+  &__mobile-btn {
+    margin-top: 1.5rem;
+    width: 75%;
+    max-width: 250px;
+    background: #ffffff;
+    border: none;
+    color: $void-solid;
+    padding: 0.8rem 0;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-weight: 600;
+  }
+}
+
+@keyframes coreGlow {
+  0%, 100% { fill: #ffffff; opacity: 0.6; }
+  50% { fill: $glow-purple; opacity: 1; }
+}
+
+// --- Smooth Structural Breakpoints ---
+@media (max-width: 840px) {
+  .navbar {
+    &__links-center, &__actions-right {
+      display: none;
+    }
+    &__hamburger {
+      display: flex;
+    }
+  }
+}

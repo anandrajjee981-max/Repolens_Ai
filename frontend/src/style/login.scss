@@ -1,0 +1,304 @@
+$void-black: #020204;
+$purple-core: #a855f7;
+$text-pure: #ffffff;
+$text-secondary: #cbd5e1; // Muted sharp color for clean visibility
+$text-dark-shatter: #64748b; 
+
+$font-mono: 'SF Mono', monospace, system-ui;
+
+.terminal-screen {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #000002;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem 1rem;
+  font-family: $font-mono;
+}
+
+// --- NEW COMPACT PHONE HARDWARE FRAME ---
+.phone-hardware {
+  position: relative;
+  width: 340px;               // Mobile container thoda aur compact kiya
+  height: 680px;              // Balanced height scale ratio
+  background: #09090e;
+  border: 3.5px solid #334155; 
+  border-radius: 36px;      
+  padding: 7px;            
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.95);
+  transition: transform 0.3s ease;
+
+  &__volume-up, &__volume-down, &__power-key {
+    position: absolute;
+    background: #475569;
+    border-radius: 2px;
+  }
+  &__volume-up { left: -6px; top: 140px; width: 3px; height: 40px; }
+  &__volume-down { left: -6px; top: 190px; width: 3px; height: 40px; }
+  &__power-key { right: -6px; top: 165px; width: 3px; height: 50px; }
+}
+
+.phone-display {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: $void-black;
+  border-radius: 28px;      
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  flex-direction: column;
+
+  &__island-notch {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90px;
+    height: 20px;
+    background: #000000;
+    border-radius: 20px;
+    z-index: 100;
+  }
+}
+
+.terminal-banner {
+  position: relative;
+  width: 100%;
+  height: 32%; // Content area ko zyada space dene ke liye banner height optimized
+
+  &__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    mix-blend-mode: luminosity;
+    opacity: 0.65;
+  }
+
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background: linear-gradient(to bottom, transparent 20%, $void-black 100%);
+  }
+}
+
+// --- MAIN WRAPPER CORE CONTENT ---
+.terminal-content {
+  flex: 1;
+  padding: 1rem 1.5rem 1.8rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+
+  // --- TOP TITLE (CRISP & BOLD VISIBILITY) ---
+  &__header-zone {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.2rem;
+    border-bottom: 1px solid rgba(168, 85, 247, 0.15);
+    padding-bottom: 0.5rem;
+  }
+
+  &__page-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: $purple-core;
+    letter-spacing: 0.06em;
+  }
+
+  &__status-indicator {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    .pulse-dot {
+      width: 6px;
+      height: 6px;
+      background-color: #10b981;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #10b981;
+    }
+    .status-text {
+      font-size: 0.65rem;
+      color: #10b981;
+      font-weight: bold;
+    }
+  }
+
+  // --- APPROACH IMAGE QUOTE DISPLAY ---
+  &__statement {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    margin-bottom: 1.5rem;
+
+    .text-bright { font-size: 0.78rem; color: $text-pure; font-weight: 500; }
+    .text-muted { font-size: 0.78rem; color: $text-secondary; font-weight: 600; }
+    .text-dim { font-size: 0.68rem; color: $text-dark-shatter; margin-top: 0.1rem; }
+  }
+}
+
+// --- FORM FIELDS CONFIG ---
+.terminal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+
+  &__group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    width: 100%;
+  }
+
+  &__label {
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: whitesmoke;
+    letter-spacing: 0.05em;
+  }
+
+  &__pass-wrapper {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  &__input {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.02);
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    outline: none;
+    padding: 0.5rem 0;
+    font-family: $font-mono;
+    font-size: 0.85rem;
+    color: $text-pure;
+    letter-spacing: 0.02em;
+    transition: border-color 0.2s ease;
+
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.18);
+      font-size: 0.75rem;
+    }
+
+    &:focus {
+      border-color: $purple-core;
+    }
+
+    &:-webkit-autofill {
+      -webkit-text-fill-color: $text-pure !important;
+      -webkit-box-shadow: 0 0 0px 1000px $void-black inset !important;
+    }
+  }
+
+  &__eye-btn {
+    position: absolute;
+    right: 0;
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+
+    svg { width: 14px; height: 14px; }
+    &:hover { color: $purple-core; }
+  }
+
+  &__submit-btn {
+    margin-top: 0.5rem;
+    width: 100%;
+    background: transparent;
+    border: 1px solid rgba(168, 85, 247, 0.4);
+    color: #e9d5ff;
+    padding: 0.75rem 0;
+    font-family: $font-mono;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: rgba(168, 85, 247, 0.08);
+      border-color: $purple-core;
+    }
+  }
+}
+
+// --- BOTTOM ALIGNMENT SECTION ---
+.terminal-content__bottom-row {
+  margin-top: auto; // Content ko upar lock karke footer ko bottom par push karega
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.terminal-content__pagination {
+  display: flex;
+  gap: 6px;
+
+  .dot {
+    width: 4px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 50%;
+
+    &--active {
+      background: $purple-core;
+      box-shadow: 0 0 6px $purple-core;
+    }
+  }
+}
+
+.terminal-content__footer-link {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  
+  span {
+    color: rgba(255, 255, 255, 0.35);
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    transition: color 0.2s ease;
+    &:hover { color: $text-pure; }
+  }
+}
+
+// --- PURE SEAMLESS MOBILE ADAPTER ---
+@media (max-width: 480px) {
+  .terminal-screen {
+    padding: 0;
+    background-color: $void-black;
+  }
+
+  .phone-hardware {
+    width: 100%;
+    height: 100vh;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    background: transparent;
+    box-shadow: none;
+
+    &__volume-up, &__volume-down, &__power-key { display: none; }
+  }
+
+  .phone-display {
+    border-radius: 0;
+    border: none;
+    &__island-notch { display: none; }
+  }
+
+  .terminal-content {
+    padding: 2rem 1.5rem 2.5rem 1.5rem;
+  }
+}

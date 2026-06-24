@@ -1,0 +1,155 @@
+$bg-void-core: #020204;       
+$text-bright: #f8fafc;
+$text-muted: #94a3b8;
+$glow-purple: #a855f7; 
+$glow-blue: #3b82f6;   
+
+$font-sans-ui: 'Inter', system-ui, sans-serif;
+
+.features {
+  background-color: $bg-void-core;
+  width: 100%;
+  padding: 6rem 2rem;
+  font-family: $font-sans-ui;
+
+  &__container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  // --- Section Header ---
+  &__header {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+
+  &__main-title {
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    font-weight: 700;
+    line-height: 1.3;
+    color: $text-bright;
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+  }
+
+  &__gradient-text {
+    background: linear-gradient(135deg, #c084fc 0%, #6366f1 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  &__subtitle {
+    font-size: clamp(0.95rem, 1.2vw, 1.05rem);
+    color: $text-muted;
+    font-weight: 400;
+  }
+
+  // --- Grid & Card Layout ---
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5rem;
+    width: 100%;
+  }
+
+  &__card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+
+    &-glow {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 120px;
+      height: 120px;
+      background: radial-gradient(circle, rgba(168, 85, 247, 0.08) 0%, transparent 70%);
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    &-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    &-icon-box {
+      width: 36px;
+      height: 36px;
+      color: $text-muted;
+      transition: color 0.3s ease;
+
+      svg {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    &-id {
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.1);
+      font-weight: 700;
+    }
+
+    &-title {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: $text-bright;
+      margin-bottom: 1.2rem;
+    }
+
+    // --- Simple Bullet Points Style ---
+    &-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    &-item {
+      font-size: 0.88rem;
+      color: $text-muted;
+      line-height: 1.5;
+      display: flex;
+      gap: 0.5rem;
+      align-items: flex-start;
+    }
+
+    &-bullet {
+      color: #a855f7;
+      font-weight: bold;
+    }
+
+    // --- Hover Micro-Interactions ---
+    &:hover {
+      border-color: rgba(168, 85, 247, 0.3);
+      background: rgba(255, 255, 255, 0.03);
+      transform: translateY(-2px);
+
+      .features__card-icon-box {
+        color: #c084fc;
+      }
+    }
+  }
+}
+
+// --- Responsive Rules ---
+@media (max-width: 768px) {
+  .features {
+    padding: 4rem 1.2rem;
+    &__grid {
+      grid-template-columns: 1fr;
+    }
+    &__card {
+      padding: 1.5rem;
+    }
+  }
+}

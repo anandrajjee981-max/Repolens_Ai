@@ -1,0 +1,194 @@
+$bg-void: #020204;
+$text-bright: #f8fafc;
+$text-muted: #94a3b8;
+$purple-glow: #a855f7;
+$border-tint: rgba(255, 255, 255, 0.05);
+
+$font-sans: 'Inter', system-ui, sans-serif;
+
+.thankyou {
+  background-color: $bg-void;
+  width: 100%;
+  padding: 8rem 2rem;
+  font-family: $font-sans;
+  border-top: 1px solid rgba(255, 255, 255, 0.02);
+
+  &__container {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 6rem;
+  }
+
+  // --- Main Interactive Core Card ---
+  &__main-card {
+    text-align: center;
+    background: rgba(255, 255, 255, 0.01);
+    border: 1px solid $border-tint;
+    padding: 4rem 2rem;
+    border-radius: 16px;
+    position: relative;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 180px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, $purple-glow, transparent);
+    }
+  }
+
+  &__title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    color: $text-bright;
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+  }
+
+  &__subtitle {
+    font-size: clamp(0.95rem, 1.2vw, 1.05rem);
+    color: $text-muted;
+    max-width: 580px;
+    margin: 0 auto 2.5rem auto;
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  // --- High Contrast Clean Portfolio Link Anchor ---
+  &__portfolio-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: #ffffff;
+    color: $bg-void;
+    text-decoration: none;
+    padding: 0.75rem 2rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    box-shadow: 0 4px 20px rgba(255, 255, 255, 0.08);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+
+    svg {
+      width: 15px;
+      height: 15px;
+      transition: transform 0.3s ease;
+    }
+
+    &:hover {
+      background: #f1f5f9;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px rgba(255, 255, 255, 0.15);
+
+      svg {
+        transform: translateX(4px);
+      }
+    }
+  }
+
+  // --- Tech Stack Section Styling ---
+  &__stack-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  &__stack-badge {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    color: #c084fc;
+    border: 1px solid rgba(168, 85, 247, 0.2);
+    padding: 0.35rem 1rem;
+    border-radius: 100px;
+    display: inline-block;
+    margin-bottom: 1rem;
+    background: rgba(168, 85, 247, 0.03);
+  }
+
+  &__stack-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: $text-bright;
+    letter-spacing: -0.01em;
+  }
+
+  &__stack-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    width: 100%;
+  }
+
+  &__stack-card {
+    background: rgba(255, 255, 255, 0.01);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    border-radius: 10px;
+    padding: 1.8rem;
+    transition: border-color 0.3s ease;
+
+    &:hover {
+      border-color: rgba(255, 255, 255, 0.08);
+    }
+  }
+
+  &__stack-category {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #a855f7;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 1.2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    padding-bottom: 0.5rem;
+  }
+
+  &__stack-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  &__stack-item {
+    font-size: 0.9rem;
+    color: $text-muted;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  &__stack-indicator {
+    width: 4px;
+    height: 4px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+  }
+}
+
+// --- Responsive Framework Handling ---
+@media (max-width: 768px) {
+  .thankyou {
+    padding: 5rem 1.2rem;
+    
+    &__container {
+      gap: 4rem;
+    }
+
+    &__main-card {
+      padding: 3rem 1.5rem;
+    }
+
+    &__stack-grid {
+      grid-template-columns: 1fr;
+      gap: 1.2rem;
+    }
+  }
+}

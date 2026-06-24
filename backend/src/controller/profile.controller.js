@@ -60,3 +60,45 @@ export async function createcard(req, res) {
     });
   }
 }
+export async function getcard(req,res){
+try{
+
+
+}
+catch(err){
+return res.status(500).json({
+  message : "internal server error"
+})
+
+}
+
+}
+
+export function getrepocard (req,res){
+try{
+
+
+}
+catch(err){
+return res.status(500).json({
+  message : "internal server error"
+})
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
