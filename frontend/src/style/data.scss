@@ -1,0 +1,425 @@
+// ==========================================================================
+// CUSTOM SPECIFIED THEME CORE PALETTE & LOGISTICS
+// ==========================================================================
+
+$bg-void-core: #020204;       // Pure deep abyss black
+$text-bright: #f8fafc;        // Ultra clean white text
+$text-muted: #94a3b8;         // Sleek slate description gray
+$glow-purple: #a855f7;        // Electric digital neon purple
+$glow-blue: #3b82f6;          // High-grade cyber neon blue
+
+// ==========================================================================
+// GLOBAL OVERFLOW AND SCROLLBAR RESET
+// ==========================================================================
+html, body {
+  background-color: #020204; // Ensures default root container is pure void dark
+  max-width: 100%;
+  overflow-x: hidden;         // Completely blocks annoying horizontal page breaking
+  overflow-y: auto;           // Allows smooth vertical scrolling normally
+  
+  // HIDING DEFAULT SCROLLBARS FOR MOOD DESIGN (CHROME, SAFARI, OPERA)
+  &::-webkit-scrollbar {
+    width: 6px;               // Super micro scrollbar width layout instead of generic white bar
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: #020204;      // Merges track completely into background void
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: rgba(59, 130, 246, 0.2); // Sleek subtle blue neon accent handle strip
+    border-radius: 10px;
+    
+    &:hover {
+      background: rgba(168, 85, 247, 0.4); // Transitions to purple hue when interacting
+    }
+  }
+
+  // Hide scrollbars for Firefox
+  scrollbar-width: thin;
+  scrollbar-color: rgba(59, 130, 246, 0.2) #020204;
+}
+
+// ==========================================================================
+// FIXING YOUR SPECIFIC ROOT PAGE WRAPPER BLOCK
+// ==========================================================================
+.vault-page-container {
+  min-height: 100vh;
+  width: 100%;
+  background-color: $bg-void-core;
+  color: $text-muted;
+ 
+  position: relative;
+  overflow: hidden; // Ensures corner ambient blurs don't expand layout limits
+  display: flex;
+}
+
+$font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+$font-mono: 'JetBrains Mono', SF Mono, monospace;
+
+// Global Structural Page Setup
+.vault-page-container {
+  min-height: 100vh;
+  width: 100%;
+  background-color: $bg-void-core;
+  color: $text-muted;
+  font-family: $font-sans;
+  position: relative;
+  overflow-x: hidden;
+  display: flex;
+}
+
+// ==========================================================================
+// BACKGROUND NEBULA ATMOSPHERE GLOW LAYERS
+// ==========================================================================
+.vault-ambient {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1;
+  filter: blur(140px);
+  opacity: 0.15;
+
+  &.glow-primary { 
+    top: -10%; 
+    right: 10%; 
+    width: 50vw; 
+    height: 50vh; 
+    background: radial-gradient(circle, $glow-blue 0%, transparent 70%); 
+  }
+  
+  &.glow-secondary { 
+    bottom: -5%; 
+    left: 5%; 
+    width: 45vw; 
+    height: 45vh; 
+    background: radial-gradient(circle, $glow-purple 0%, transparent 70%); 
+  }
+}
+
+// ==========================================================================
+// VIEWPORT & COMPLETE CENTRALIZED WRAPPER MATRIX
+// ==========================================================================
+.vault-viewport { 
+  flex: 1; 
+  padding: 5rem 2rem; 
+  z-index: 10; 
+  display: flex;
+  justify-content: center; // Horizontally centers the entire workspace grid
+}
+
+.vault-wrapper { 
+  max-width: 1140px; 
+  width: 100%; 
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+// ==========================================================================
+// FULL TELEMETRY HEADER SECTION (SYMMETRIC CENTRE-FOCUS ALIGNMENT)
+// ==========================================================================
+.vault-header-block {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding-bottom: 2.5rem;
+  margin-bottom: 4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;    // Centers child elements horizontally
+  text-align: center;     // Centers textual data assets
+
+  .system-live-pulse {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 0.8rem;
+    font-family: $font-mono;
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    color: $glow-blue;
+
+    .pulse-dot { 
+      width: 5px; 
+      height: 5px; 
+      background: $glow-blue; 
+      border-radius: 50%; 
+    }
+    
+    .pulse-ping {
+      position: absolute; 
+      width: 5px; 
+      height: 5px; 
+      background: $glow-blue; 
+      border-radius: 50%;
+      animation: ledPing 1.5s infinite ease-in-out;
+    }
+    p { margin: 0; font-weight: 700; }
+  }
+
+  h1 {
+    font-size: 2.8rem; // Bold centered typography presence
+    font-weight: 700;
+    color: $text-bright;
+    margin: 0 0 0.8rem 0;
+    letter-spacing: -0.02em;
+    
+    span { 
+      background: linear-gradient(135deg, $glow-blue, $glow-purple); 
+      -webkit-background-clip: text; 
+      -webkit-text-fill-color: transparent; 
+    }
+  }
+
+  p { 
+    margin: 0 auto 1.5rem auto; 
+    font-size: 0.95rem; 
+    color: $text-muted; 
+    max-width: 600px; // Standard web guidelines wrap layout for elite focus
+    line-height: 1.6;
+  }
+  
+  .vault-count-badge {
+    font-family: $font-mono; 
+    font-size: 0.7rem; 
+    font-weight: 700; 
+    color: $glow-purple;
+    background: rgba($glow-purple, 0.04); 
+    border: 1px solid rgba($glow-purple, 0.2);
+    padding: 6px 16px; 
+    border-radius: 6px;
+    letter-spacing: 0.05em;
+    display: inline-block;
+  }
+}
+
+// Grid Layout Distribution Control
+.vault-grid-layout {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2rem;
+  width: 100%;
+}
+
+// ==========================================================================
+// ULTRA-PREMIUM INTERACTIVE QUANTUM TECH CARD DESIGN
+// ==========================================================================
+.quantum-tech-card {
+  background: rgba(8, 8, 14, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transform-style: preserve-3d; // Enabled for zero distortion during 3D scaling
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+  transition: border-color 0.2s ease;
+
+  // Immersive Background Canvas Rendering Engine
+  .card-sci-fi-bg {
+    position: absolute; 
+    inset: 0; 
+    background-size: cover; 
+    background-position: center;
+    opacity: 0.08; 
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    z-index: -2;
+  }
+  
+  .cyber-overlay-shade { 
+    position: absolute; 
+    inset: 0; 
+    background: linear-gradient(to bottom, transparent, #020204 95%); 
+    z-index: -1; 
+  }
+  
+  .cyber-grid-overlay {
+    position: absolute; 
+    inset: 0; 
+    opacity: 0.03; 
+    z-index: -1;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px), 
+                      linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+
+  // Reactive Cursor Spotlight Node
+  .cursor-flare-tracker {
+    position: absolute; 
+    width: 100px; 
+    height: 100px; 
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba($glow-blue, 0.15) 0%, transparent 70%);
+    pointer-events: none; 
+    opacity: 0; 
+    z-index: 0;
+  }
+
+  // Technical Interface Corner Bracket Vectors
+  .tech-corner {
+    position: absolute; 
+    width: 8px; 
+    height: 8px; 
+    border: 2px solid rgba(255, 255, 255, 0.1); 
+    pointer-events: none;
+    transition: border-color 0.3s ease;
+    
+    &.bracket-tl { top: 12px; left: 12px; border-right: none; border-bottom: none; }
+    &.bracket-br { bottom: 12px; right: 12px; border-left: none; border-top: none; }
+  }
+
+  // Interactive Hover Interface Triggers
+  &:hover {
+    border-color: rgba($glow-blue, 0.4);
+    
+    .card-sci-fi-bg { opacity: 0.22; transform: scale(1.05); }
+    .tech-corner { border-color: $glow-blue; }
+    .card-main-identity h3 { color: #ffffff; text-shadow: 0 0 15px rgba(255,255,255,0.2); }
+    
+    .explore-trigger {
+      background: rgba($glow-blue, 0.1); 
+      color: $text-bright; 
+      border-color: rgba($glow-blue, 0.3);
+      svg { transform: translateX(4px); color: $glow-purple; }
+    }
+  }
+
+  // Component Segment Mapping Stack
+  .card-telemetry {
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    margin-bottom: 2rem; 
+    transform: translateZ(20px); // Pop off the background plate
+    
+    .lang-badge {
+      font-size: 0.72rem; 
+      font-weight: 700; 
+      color: $text-bright; 
+      font-family: $font-mono;
+      background: rgba(255, 255, 255, 0.03); 
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 4px 10px; 
+      border-radius: 4px; 
+      display: inline-flex; 
+      align-items: center; 
+      gap: 6px;
+
+      .indicator-led { 
+        width: 5px; 
+        height: 5px; 
+        background: $glow-blue; 
+        border-radius: 50%; 
+        box-shadow: 0 0 8px $glow-blue; 
+      }
+    }
+    .serial-id { font-family: $font-mono; font-size: 0.68rem; color: rgba($text-muted, 0.4); letter-spacing: 0.05em; }
+  }
+
+  .card-main-identity {
+    margin-bottom: 2.2rem; 
+    transform: translateZ(35px); // Stronger 3D pop depth perception
+    
+    h3 { 
+      font-size: 1.35rem; 
+      font-weight: 600; 
+      color: rgba($text-bright, 0.9); 
+      margin: 0 0 0.6rem 0; 
+      letter-spacing: -0.01em; 
+      transition: all 0.3s ease; 
+    }
+    
+    .repo-url-string { 
+      font-family: $font-mono; 
+      font-size: 0.74rem; 
+      color: rgba($text-muted, 0.6); 
+      word-break: break-all; 
+      line-height: 1.4; 
+      display: -webkit-box; 
+      -webkit-line-clamp: 2; 
+      -webkit-box-orient: vertical; 
+      overflow: hidden; 
+    }
+  }
+
+  .card-interactive-action {
+    transform: translateZ(15px);
+    
+    .explore-trigger {
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      gap: 8px; 
+      width: 100%; 
+      text-decoration: none;
+      font-family: $font-mono; 
+      font-size: 0.75rem; 
+      font-weight: 700; 
+      color: $text-muted;
+      border: 1px solid rgba(255,255,255,0.04); 
+      background: rgba(255,255,255,0.01);
+      padding: 10px 0; 
+      border-radius: 8px; 
+      transition: all 0.3s ease; 
+      letter-spacing: 0.05em;
+
+      svg { color: $glow-blue; transition: transform 0.2s ease, color 0.2s ease; }
+    }
+  }
+}
+
+// ==========================================================================
+// TECHNICAL FALLBACK SPIN LAYOUT LOADERS & ANIMATION KEYFRAMES
+// ==========================================================================
+.vault-sync-loader {
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  justify-content: center; 
+  padding: 9rem 0; 
+  gap: 1.2rem;
+  
+  .matrix-spinner { 
+    width: 28px; 
+    height: 28px; 
+    border: 2px solid rgba($glow-blue, 0.1); 
+    border-top-color: $glow-blue; 
+    border-right-color: $glow-purple; 
+    border-radius: 50%; 
+    animation: coreSpin 0.7s linear infinite; 
+  }
+  p { font-family: $font-mono; font-size: 0.75rem; letter-spacing: 0.08em; color: rgba($text-muted, 0.5); }
+}
+
+.vault-empty-state {
+  text-align: center;
+  padding: 5rem 2rem;
+  background: rgba(255, 255, 255, 0.01);
+  border: 1px dashed rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  width: 100%;
+  p { font-size: 0.9rem; color: rgba($text-muted, 0.6); }
+}
+
+// Hardware Accelerated Keyframe Animations
+@keyframes coreSpin { to { transform: rotate(360deg); } }
+@keyframes ledPing { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(3); opacity: 0; } }
+
+// ==========================================================================
+// RESPONSIVE COMPRESSION PORTS
+// ==========================================================================
+@media (max-width: 768px) {
+  .vault-viewport { 
+    padding: 3rem 1.2rem; 
+  }
+  .vault-header-block {
+    margin-bottom: 2.5rem;
+    h1 { font-size: 2rem; }
+  }
+  .vault-grid-layout { 
+    grid-template-columns: 1fr; // Stack cards single column style on smaller ports
+  }
+}

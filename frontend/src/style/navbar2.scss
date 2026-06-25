@@ -1,0 +1,270 @@
+$void-black: #020204;
+$purple-neon: #a855f7;
+$text-bright: #ffffff;
+$text-muted: #5a6e85; 
+$border-matrix: rgba(168, 85, 247, 0.08);
+$font-mono: 'SF Mono', monospace, system-ui;
+
+.terminal-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 76px; 
+  height: 100vh;
+  background-color: #040407;
+  border-right: 1px solid $border-matrix;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 0;
+  z-index: 1000;
+  font-family: $font-mono;
+  overflow: hidden;
+  will-change: width; // Hardware acceleration layer browser ko trigger karta hai
+
+  &__top-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 1rem;
+  }
+
+  &__brand {
+    cursor: pointer;
+    margin-bottom: 4.5rem;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+    justify-content: flex-start;
+    padding-left: 14px;
+
+    .navbar__logo-box {
+      width: 22px;
+      height: 22px;
+      flex-shrink: 0;
+    }
+
+    .brand-text {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: $text-bright;
+      letter-spacing: 0.08em;
+      opacity: 0;
+      transform: translateX(-8px);
+      white-space: nowrap;
+      will-change: transform, opacity;
+    }
+  }
+
+  .hamburger-trigger { display: none; }
+
+  &__menu {
+    display: flex;
+    flex-direction: column;
+    gap: 1.8rem;
+    width: 100%;
+  }
+
+  .nav-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    color: $text-muted;
+    cursor: pointer;
+    width: 100%;
+    padding: 0.5rem 1rem;
+    gap: 14px;
+
+    &__icon-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: transparent;
+      border: 1px solid transparent;
+      flex-shrink: 0;
+      transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+
+      .nav-icon-svg {
+        width: 18px;
+        height: 18px;
+      }
+    }
+
+    &__label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      opacity: 0;
+      transform: translateX(-8px);
+      white-space: nowrap;
+      will-change: transform, opacity;
+    }
+
+    &__indicator {
+      position: absolute;
+      left: 0;
+      top: 25%;
+      height: 50%;
+      width: 3px;
+      background-color: $purple-neon;
+      border-radius: 0 4px 4px 0;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.2s ease;
+      box-shadow: 0 0 8px $purple-neon;
+    }
+
+    &:hover {
+      color: $text-bright;
+      .nav-item__icon-wrapper {
+        background: rgba(255, 255, 255, 0.02);
+        border-color: rgba(255, 255, 255, 0.05);
+      }
+    }
+
+    &--active {
+      color: $text-bright;
+      .nav-item__icon-wrapper {
+        background: rgba(168, 85, 247, 0.06);
+        border-color: rgba(168, 85, 247, 0.2);
+        color: $purple-neon;
+        filter: drop-shadow(0 0 4px rgba(168, 85, 247, 0.2));
+      }
+      .nav-item__indicator { transform: scaleX(1); }
+    }
+  }
+
+  &__status {
+    margin-top: auto;
+    align-self: center;
+    .status-node {
+      width: 6px;
+      height: 6px;
+      background-color: #10b981;
+      border-radius: 50%;
+      box-shadow: 0 0 6px #10b981;
+    }
+  }
+}
+
+// --- OPTIMIZED MOBILE MATRIX OVERRIDES ---
+@media (max-width: 768px) {
+  .terminal-nav {
+    width: 100%;
+    height: 60px;
+    flex-direction: column;
+    padding: 0;
+    border-right: none;
+    border-bottom: 1px solid $border-matrix;
+
+    &__top-wrapper {
+      height: 60px;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 1.2rem;
+      position: relative;
+      z-index: 1050;
+      background: #040407;
+      width: 100%;
+    }
+
+    &__brand {
+      margin-bottom: 0;
+      padding-left: 0;
+      width: auto;
+      .brand-text {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+    }
+
+    .hamburger-trigger {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 4px;
+      width: 30px;
+      height: 30px;
+      cursor: pointer;
+      z-index: 1100;
+      align-items: flex-end;
+
+      .line {
+        height: 2px;
+        background-color: $text-bright;
+        transition: transform 0.25s ease, opacity 0.2s ease, width 0.2s ease;
+        border-radius: 2px;
+        
+        &:nth-child(1) { width: 20px; }
+        &:nth-child(2) { width: 14px; }
+        &:nth-child(3) { width: 18px; }
+      }
+
+      &--open {
+        .line {
+          background-color: $purple-neon;
+          &:nth-child(1) { transform: translateY(6px) rotate(45deg); width: 20px; }
+          &:nth-child(2) { opacity: 0; width: 0; }
+          &:nth-child(3) { transform: translateY(-6px) rotate(-45deg); width: 20px; }
+        }
+      }
+    }
+
+    &__menu {
+      position: fixed;
+      top: 60px;
+      left: 0;
+      width: 100%;
+      height: calc(100vh - 60px);
+      background-color: rgba(4, 4, 7, 0.98);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      
+      // Fast Layout Switching Control
+      display: none; 
+      visibility: hidden;
+      flex-direction: column;
+      padding: 2.5rem 1.5rem;
+      gap: 1.2rem;
+      transform: translateY(-20px);
+      opacity: 0;
+      z-index: 1040;
+      will-change: transform, opacity;
+
+      &.is-visible {
+        display: flex;
+        visibility: visible;
+      }
+    }
+
+    .nav-item {
+      padding: 0.8rem 1rem;
+      background: rgba(255, 255, 255, 0.01);
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      border-radius: 12px;
+      width: 100%;
+
+      &__label {
+        opacity: 1 !important;
+        transform: none !important;
+        font-size: 0.8rem;
+        color: #94a3b8;
+      }
+
+      &__indicator { display: none; }
+
+      &--active {
+        border-color: rgba(168, 85, 247, 0.25);
+        background: rgba(168, 85, 247, 0.03);
+        .nav-item__label { color: $purple-neon; }
+      }
+    }
+
+    &__status { display: none; }
+  }
+}
