@@ -56,7 +56,7 @@ const Data = () => {
       // Failsafe Layer: If record was not found or generation got corrupted
       console.warn("❌ CRITICAL: Architecture data missing. Redirecting to initialization dashboard.");
       alert("⚠️ This repository analysis hasn't been completed or generated yet. Redirecting to workspace hub...");
-      navigate('/'); // Dynamic fallback to engine center to recreate records
+      navigate('/library'); // Dynamic fallback to engine center to recreate records
       
     } catch (err) {
       console.error("Pipeline failure checking registry index keys:", err);
