@@ -35,21 +35,29 @@ const Dashboard = () => {
     return () => ctx.revert();
   }, []);
 
-  // 2. Dynamic Laser Scanning Watcher
+  // 2. Dynamic Laser Scanning Watcher 
+  // FIXED: GSAP timeline trigger block optimized for raw loop performance
   useEffect(() => {
     if (isLoading) {
-      // Create and start laser sweeping timeline loop when hook state shifts to true
+      console.log("⚡ ENGAGING LASER SCANNER: AI processing has initiated.");
+      
+      // Target clean setup for scanning beam container
+      gsap.set('.laser-scan-line', { opacity: 1, left: '-10%' });
+      
       scanTimelineRef.current = gsap.timeline({ repeat: -1 });
-      scanTimelineRef.current.fromTo('.laser-scan-line', 
-        { left: '-10%' }, 
-        { left: '110%', duration: 1.5, ease: 'power2.inOut' }
-      );
+      scanTimelineRef.current.to('.laser-scan-line', { 
+        left: '110%', 
+        duration: 1.8, // Slightly extended for beautiful techno-feel
+        ease: 'power2.inOut' 
+      });
     } else {
-      // Safely kill animation loops when loading switches back to false
+      console.log("🛑 DISENGAGING LASER SCANNER");
       if (scanTimelineRef.current) {
         scanTimelineRef.current.kill();
         scanTimelineRef.current = null;
       }
+      // Instantly fade out line if loading drops
+      gsap.to('.laser-scan-line', { opacity: 0, duration: 0.3 });
     }
 
     return () => {
@@ -58,13 +66,29 @@ const Dashboard = () => {
   }, [isLoading]);
 
   // 3. Form Submission Handling
+  // FIXED: Strictly enforced async pipeline blocking to prevent pre-mature routing
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Safety Guard Lock: Block actions if url is empty or system is already executing
     if (!url.trim() || isLoading) return;
 
-    const res = await handlecontent(url);
-    if (res) {
-      navigate('/library');
+    try {
+      console.log("🚀 Initializing Handshake Protocol for link:", url);
+      
+      // 1. Await completely for the backend to finish data collection & AI model processing
+      const res = await handlecontent(url);
+      
+      // 2. STRICT VALIDATION CHECK: Navigate only if response exists and is successful
+      if (res) {
+        console.log("✅ Analysis complete! Routing to history ledger...");
+        // Redirect directly to your data vault lists page
+        navigate('/data'); 
+      } else {
+        console.warn("⚠️ Backend responded but token parsing failed.");
+      }
+    } catch (error) {
+      console.error("❌ Thread execution halted during repository scan:", error);
     }
   };
 
@@ -82,10 +106,10 @@ const Dashboard = () => {
         {/* System Telemetry Header */}
         <div className="panel-header-status premium-reveal">
           <div className="engine-tag">
-            <span className="dot"></span>
-            <p>REPOLENS CORE ENGINE v2</p>
+            <span className={`dot ${isLoading ? 'scanning-pulse' : ''}`}></span>
+            <p>{isLoading ? "ANALYZING CORE DATA VECTORS" : "REPOLENS CORE ENGINE v2"}</p>
           </div>
-          <div className="security-tag">AES-256 SECURE</div>
+          <div className="security-tag">{isLoading ? "COMPILING SYSTEM" : "AES-256 SECURE"}</div>
         </div>
 
         {/* Description Headings */}
@@ -96,10 +120,10 @@ const Dashboard = () => {
 
         {/* Input Wrapper Field */}
         <form className="saas-vector-form premium-reveal" onSubmit={handleSubmit}>
-          <div className={`input-field-wrapper ${isLoading ? 'is-loading' : ''}`}>
+          <div className={`input-field-wrapper ${isLoading ? 'is-loading-active' : ''}`}>
             
-            {/* The Animated Laser Beam Line */}
-            {isLoading && <div className="laser-scan-line" />}
+            {/* The Animated Laser Beam Line Container */}
+            <div className="laser-scan-line" style={{ opacity: isLoading ? 1 : 0 }} />
             
             <div className="input-icon">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -117,7 +141,7 @@ const Dashboard = () => {
               required
             />
 
-            <button type="submit" className="neon-submit-trigger" disabled={isLoading}>
+            <button type="submit" className={`neon-submit-trigger ${isLoading ? 'disabled-glow' : ''}`} disabled={isLoading}>
               {isLoading ? (
                 <div className="loading-dots">
                   <span></span><span></span><span></span>
@@ -137,7 +161,7 @@ const Dashboard = () => {
 
         {/* Real-time Status Micro Metrics */}
         <div className="panel-footer-metrics premium-reveal">
-          <span className="token">STATUS: {isLoading ? "COMPILING INDEX" : "READY TO STREAM"}</span>
+          <span className="token">STATUS: {isLoading ? "COMPILING INDEX METRICS..." : "READY TO STREAM"}</span>
           <span className="token">JWT AUTH LINK ACTIVE</span>
         </div>
 

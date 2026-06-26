@@ -3,28 +3,73 @@ import Navbar2 from '../../components/Navbar2';
 import useRepo from './hooks/userepo'; 
 import { gsap } from 'gsap';
 import '../../style/data.scss';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
-// 5 Techy Space/Cosmic Abstract Stock Vectors for randomized backgrounds
+// Perfected absolute slice action mapping
+import { setpath } from '../pages/repo.slice.js'; 
+
 const CYBER_CORES = [
-  "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=600&auto=format&fit=crop", // Quantum mesh
-  "https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?q=80&w=600&auto=format&fit=crop", // Purple nebula structure
-  "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?q=80&w=600&auto=format&fit=crop", // Tech matrix wires
-  "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=600&auto=format&fit=crop", // Dark cyber gate
-  "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=600&auto=format&fit=crop"  // Deep aurora plasma
+  "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=600&auto=format&fit=crop", 
+  "https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?q=80&w=600&auto=format&fit=crop", 
+  "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?q=80&w=600&auto=format&fit=crop", 
+  "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=600&auto=format&fit=crop", 
+  "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=600&auto=format&fit=crop"  
 ];
 
 const Data = () => {
-  const { handlegetrepocard } = useRepo(); 
+  // Destructuring handlegetcontent also to verify if metrics exist in active records database
+  const { handlegetrepocard, handlegetcontent } = useRepo(); 
   const [repoCards, setRepoCards] = useState([]);
   const [isPageLoading, setIsPageLoading] = useState(true);
+  const [isChecking, setIsChecking] = useState(null); // Tracks layout click synchronization locks
+  
   const containerRef = useRef(null);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  // FIX: Added Verification handshakes before allowing navigation pipelines
+  const handleRoute = async (repourl, cardId) => {
+    if (isChecking) return; // Prevention barrier for double-click requests
+    
+    setIsChecking(cardId); // Trigger dynamic card telemetry loading thread
+    
+    try {
+      console.log(`📡 VERIFYING VAULT EXISTENCE FOR: ${repourl}`);
+      const res = await handlegetcontent(repourl);
+      
+      // Strict Validation: Ensure data array structural elements actually exist
+      if (res && res.contents && res.contents.length > 0) {
+        // Double matching layer to verify content corresponds to currentpath targets
+        const recordExists = res.contents.some(
+          (item) => item.repoUrl?.trim().toLowerCase() === repourl.trim().toLowerCase()
+        );
+
+        if (recordExists) {
+          console.log("🎯 Verification Successful. Dispatching route tokens...");
+          dispatch(setpath(repourl)); 
+          navigate('/contents'); 
+          return;
+        }
+      }
+      
+      // Failsafe Layer: If record was not found or generation got corrupted
+      console.warn("❌ CRITICAL: Architecture data missing. Redirecting to initialization dashboard.");
+      alert("⚠️ This repository analysis hasn't been completed or generated yet. Redirecting to workspace hub...");
+      navigate('/'); // Dynamic fallback to engine center to recreate records
+      
+    } catch (err) {
+      console.error("Pipeline failure checking registry index keys:", err);
+    } finally {
+      setIsChecking(null);
+    }
+  };
 
   useEffect(() => {
     const fetchCards = async () => {
       try {
         const res = await handlegetrepocard(); 
         if (res && res.repocard) {
-          // Enhancing data structure directly by mapping random background index slots
           const enrichedData = res.repocard.map((card, idx) => ({
             ...card,
             bgImage: CYBER_CORES[idx % CYBER_CORES.length]
@@ -40,7 +85,7 @@ const Data = () => {
     fetchCards();
   }, []);
 
-  // 1. Entrance Stagger Animation Node Engine
+  // GSAP Entrance Stagger Engine Blueprint
   useEffect(() => {
     if (repoCards.length > 0) {
       const ctx = gsap.context(() => {
@@ -53,14 +98,13 @@ const Data = () => {
     }
   }, [repoCards]);
 
-  // 2. High-End GSAP 3D Interactive Tilt Handler
-  const handleMouseMove = (e, cardId) => {
+  // Dynamic Isometric 3D Hover Tilt Controller Matrix
+  const handleMouseMove = (e) => {
     const card = e.currentTarget;
     const box = card.getBoundingClientRect();
     const x = e.clientX - box.left - box.width / 2;
     const y = e.clientY - box.top - box.height / 2;
     
-    // Normalize axis ratios for precision tilt rotation matrix
     const rotX = -(y / (box.height / 2)) * 10; 
     const rotY = (x / (box.width / 2)) * 10;
 
@@ -74,7 +118,6 @@ const Data = () => {
       ease: 'power2.out'
     });
 
-    // Animate the inside glowing flare following cursor track positioning
     const flare = card.querySelector('.cursor-flare-tracker');
     if (flare) {
       gsap.to(flare, {
@@ -111,7 +154,6 @@ const Data = () => {
       <main className="vault-viewport">
         <div className="vault-wrapper">
           
-          {/* Header Layout Status Checkpoint */}
           <div className="vault-header-block quantum-tech-card">
             <div className="title-area">
               <div className="system-live-pulse">
@@ -120,14 +162,12 @@ const Data = () => {
                 <p>DATAFRAME // SECURE</p>
               </div>
               <h1>Repository <span>History</span></h1>
-             
             </div>
             <div className="vault-count-badge">
               <span>ACTIVE_CORES // 00{repoCards.length}</span>
             </div>
           </div>
 
-          {/* Conditional Layout Gateways */}
           {isPageLoading ? (
             <div className="vault-sync-loader">
               <div className="matrix-spinner"></div>
@@ -142,19 +182,15 @@ const Data = () => {
               {repoCards.map((card) => (
                 <div 
                   key={card._id} 
-                  className="quantum-tech-card"
-                  onMouseMove={(e) => handleMouseMove(e, card._id)}
+                  className={`quantum-tech-card ${isChecking === card._id ? 'card-loading-lock' : ''}`}
+                  onMouseMove={handleMouseMove}
                   onMouseLeave={handleMouseLeave}
                 >
-                  {/* Dynamic Immersive Background Layer */}
                   <div className="card-sci-fi-bg" style={{ backgroundImage: `url(${card.bgImage})` }}></div>
                   <div className="cyber-overlay-shade"></div>
                   <div className="cyber-grid-overlay"></div>
                   
-                  {/* Interactive Lighting Node Follower */}
                   <div className="cursor-flare-tracker"></div>
-
-                  {/* Corner Tech Vectors Decorator */}
                   <div className="tech-corner bracket-tl"></div>
                   <div className="tech-corner bracket-br"></div>
 
@@ -171,20 +207,30 @@ const Data = () => {
                     <p className="repo-url-string">{card.repoUrl}</p>
                   </div>
 
-                  <div className="card-interactive-action">
-                    <a 
-                      href={card.repoUrl} 
-                      target="_blank" 
-                      rel="noopener noreferrer" 
-                      className="explore-trigger"
-                    >
-                      <span>See code</span>
-                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
-                        <line x1="5" y1="12" x2="19" y2="12"></line>
-                        <polyline points="12 5 19 12 12 19"></polyline>
-                      </svg>
-                    </a>
+                  {/* Bound Dynamic Content Shifting Handler with UI Loading feedback locks */}
+                  <div 
+                    className="card-interactive-action" 
+                    onClick={() => handleRoute(card.repoUrl, card._id)}
+                    style={{ cursor: isChecking ? 'not-allowed' : 'pointer' }}
+                  >
+                    <div className="explore-trigger">
+                      {isChecking === card._id ? (
+                        <>
+                          <span className="cyber-mini-spin"></span>
+                          <span>SYNCING REGISTRY...</span>
+                        </>
+                      ) : (
+                        <>
+                          <span>SEE CONTENTS</span>
+                          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                          </svg>
+                        </>
+                      )}
+                    </div>
                   </div>
+
                 </div>
               ))}
             </div>

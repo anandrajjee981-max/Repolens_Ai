@@ -4,6 +4,7 @@ import Login from './features/auth/Login';
 import Register from './features/auth/Register';
 import Dashboard from './features/pages/Dashboard';
 import Data from './features/pages/Data';
+import Contents from './features/pages/Contents';
 
 export const router = createBrowserRouter([
   {
@@ -25,5 +26,9 @@ export const router = createBrowserRouter([
   {
     path : '/library',
     element : <Data/>
+  },
+  {
+    path : '/contents',
+    element : <Contents/>
   }
 ]);

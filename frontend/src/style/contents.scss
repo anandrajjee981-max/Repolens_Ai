@@ -1,0 +1,248 @@
+// ==========================================================================
+// ABYSS ULTRA-HIGH CONTRAST DESKTOP/MOBILE STANDARD PROTOCOL
+// ==========================================================================
+$bg-void-core: #020204;
+$text-bright: #f8fafc;
+$text-muted: #94a3b8;
+$glow-purple: #a855f7;
+$glow-blue: #3b82f6;
+$glow-red: #ef4444;
+$glow-green: #10b981;
+$panel-dark: #050508;
+$card-inner-bg: #09090f;
+
+.content-dashboard-root {
+  min-height: 100vh; width: 100%; background-color: $bg-void-core; color: $text-muted;
+  position: relative; overflow-x: hidden; padding: 5rem 1rem; font-family: 'Inter', sans-serif;
+
+  @media (max-width: 768px) { padding: 3rem 0.5rem; }
+}
+
+.ambient-grid-lines {
+  position: absolute; inset: 0; pointer-events: none; opacity: 0.01;
+  background-size: 30px 30px;
+  background-image: linear-gradient(to right, #fff 1px, transparent 1px), linear-gradient(to bottom, #fff 1px, transparent 1px);
+  z-index: 1;
+}
+
+.dashboard-lens-glow {
+  position: absolute; top: -10%; left: 50%; transform: translateX(-50%);
+  width: 90vw; height: 35vh; 
+  background: radial-gradient(circle, rgba($glow-purple, 0.04) 0%, transparent 100%);
+  filter: blur(80px); pointer-events: none; z-index: 2;
+}
+
+.content-container-wrapper {
+  max-width: 1100px; margin: 0 auto; width: 100%; position: relative; z-index: 10;
+}
+
+// Responsive Matrix Header Layer
+.content-telemetry-header {
+  border: 1px solid rgba(255, 255, 255, 0.03); background: rgba($panel-dark, 0.8);
+  padding: 1.5rem 2rem; border-radius: 12px;
+  display: flex; flex-direction: row; justify-content: space-between; align-items: center; 
+  gap: 1.5rem; margin-bottom: 2rem;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+
+  @media (max-width: 768px) { flex-direction: column; align-items: flex-start; padding: 1.2rem; }
+
+  .live-pill {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; color: $glow-blue; font-weight: 700;
+    border: 1px solid rgba($glow-blue, 0.2); background: rgba($glow-blue, 0.02);
+    padding: 3px 8px; border-radius: 4px; letter-spacing: 0.05em; display: inline-flex; align-items: center; gap: 5px;
+
+    .pulse-dot { width: 4px; height: 4px; background-color: $glow-blue; border-radius: 50%; }
+  }
+
+  h1 { font-size: 1.8rem; color: $text-bright; margin: 0.4rem 0 0.2rem 0; font-weight: 800; letter-spacing: -0.02em; }
+  .repo-hash-link { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: rgba($text-muted, 0.4); margin: 0; word-break: break-all; }
+
+  .score-badge-matrix {
+    display: flex; align-items: center; gap: 10px; background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.04); padding: 10px 16px; border-radius: 8px;
+    flex-shrink: 0;
+    
+    .award-ico { color: $glow-purple; }
+    .score-data {
+      display: flex; flex-direction: column;
+      .score-num { font-size: 1.5rem; font-weight: 900; color: $text-bright; line-height: 1; }
+      .score-max { font-size: 0.55rem; font-family: 'JetBrains Mono', monospace; color: rgba($text-muted, 0.4); margin-top: 2px; }
+    }
+  }
+}
+
+// Adaptive Tab bar Navigation Layout
+.dashboard-tab-bar {
+  display: flex; gap: 0.3rem; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.02);
+  padding: 4px; border-radius: 8px; margin-bottom: 1.5rem; overflow-x: auto;
+  scrollbar-width: none;
+  &::-webkit-scrollbar { display: none; }
+
+  .tab-trigger {
+    background: transparent; border: none; padding: 10px 16px; font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem; font-weight: 600; color: rgba($text-muted, 0.5); border-radius: 6px;
+    display: flex; align-items: center; gap: 6px; cursor: pointer; transition: all 0.15s ease;
+    white-space: nowrap;
+
+    &:hover { color: $text-bright; }
+    &.active { background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.04); color: $text-bright; }
+  }
+}
+
+// Global Clean Terminal Panels Template
+.terminal-panel {
+  background: $panel-dark; border: 1px solid rgba(255, 255, 255, 0.03); border-radius: 12px;
+  overflow: hidden; box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+
+  .panel-action-bar {
+    background: rgba(0, 0, 0, 0.3); border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    padding: 10px 1.5rem; display: flex; justify-content: space-between; align-items: center;
+    font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: rgba($text-muted, 0.4);
+    @media (max-width: 500px) { padding: 10px 1rem; }
+
+    &.status-alert-roast { border-bottom-color: rgba($glow-red, 0.15); color: $glow-red; font-weight: 700; }
+
+    .copy-action-btn {
+      background: transparent; border: 1px solid rgba(255,255,255,0.04); color: $text-muted;
+      padding: 4px 8px; border-radius: 4px; display: flex; align-items: center; gap: 4px;
+      font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; cursor: pointer;
+      &:hover { background: rgba(255,255,255,0.02); color: $text-bright; }
+    }
+  }
+}
+
+// Non-github Premium Markdown Renderer Core Block
+.markdown-body-content {
+  padding: 2rem; line-height: 1.6; color: $text-bright; font-size: 0.92rem;
+  @media (max-width: 500px) { padding: 1.2rem; }
+  
+  h1, h2, h3 { color: $text-bright; margin-top: 1.5rem; font-weight: 700; border: none; padding: 0; }
+  h1 { font-size: 1.3rem; color: $glow-blue; margin-bottom: 0.8rem; }
+  h2 { font-size: 1.15rem; }
+  p { margin-bottom: 1rem; }
+  ul { padding-left: 1.1rem; margin-bottom: 1rem; li { margin-bottom: 0.4rem; } }
+  code { font-family: 'JetBrains Mono', monospace; background: rgba(255,255,255,0.05); padding: 2px 4px; border-radius: 4px; color: #f43f5e; font-size: 0.8rem; }
+  pre { background: rgba(0,0,0,0.4) !important; border: 1px solid rgba(255,255,255,0.03); padding: 1rem; border-radius: 6px; overflow-x: auto; }
+}
+
+// Architectural Metrics Container Setup
+.review-card-layout {
+  padding: 2rem; display: flex; flex-direction: column; gap: 1.5rem;
+  @media (max-width: 500px) { padding: 1rem; }
+
+  .recommendation-strip {
+    position: relative; background: $card-inner-bg; border: 1px solid rgba(255,255,255,0.02);
+    padding: 1.2rem; border-radius: 8px;
+    .strip-neon-indicator { position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: $glow-blue; }
+    h3 { margin: 0 0 0.2rem 0; font-size: 0.65rem; font-family: 'JetBrains Mono', monospace; color: rgba($text-muted, 0.4); }
+    .recommendation-value { margin: 0; font-size: 1.1rem; color: $text-bright; font-weight: 700; }
+  }
+
+  .review-split-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; @media (max-width: 768px) { grid-template-columns: 1fr; } }
+  .review-split-box {
+    background: $card-inner-bg; border: 1px solid rgba(255,255,255,0.02); padding: 1.2rem; border-radius: 10px;
+    &.strength-card { border-top: 2px solid $glow-green; }
+    &.weakness-card { border-top: 2px solid $glow-red; }
+
+    .box-header {
+      display: flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; font-weight: 700; margin-bottom: 1rem;
+      &.green-neon { color: $glow-green; }
+      &.red-neon { color: $glow-red; }
+    }
+    .bullet-insights { padding-left: 1rem; margin: 0; color: $text-bright; font-size: 0.88rem; line-height: 1.5; li { margin-bottom: 0.5rem; } }
+  }
+}
+
+// NEW HIGH-CONTRAST TERMINAL CODE-ROW ROAST PROTOCOL (Anti-fade UI)
+.roast-standard-stream {
+  padding: 1.5rem; background: #040407; display: flex; flex-direction: column; gap: 2px;
+  @media (max-width: 500px) { padding: 0.8rem; }
+
+  .roast-terminal-row {
+    display: flex; flex-direction: row; align-items: flex-start; gap: 14px;
+    padding: 10px 12px; border-radius: 4px; transition: background 0.1s ease;
+    @media (max-width: 500px) { gap: 8px; padding: 8px; }
+
+    &:hover { background: rgba(255, 255, 255, 0.01); }
+
+    .line-counter {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: rgba($text-muted, 0.25);
+      width: 20px; text-align: right; user-select: none; flex-shrink: 0; margin-top: 2px;
+    }
+
+    .error-syntax-flag {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: $glow-red; font-weight: 700;
+      flex-shrink: 0; user-select: none; margin-top: 2px;
+    }
+
+    .roast-pure-text {
+      margin: 0; font-size: 0.95rem; color: $text-bright; font-weight: 700; line-height: 1.45;
+      word-break: break-word;
+    }
+  }
+}
+
+// NEW LINE-BY-LINE STANDARD EXPLICIT Q&A MATRIX
+.qa-explicit-vertical-stack {
+  padding: 2rem; display: flex; flex-direction: column; gap: 2.2rem;
+  @media (max-width: 500px) { padding: 1.2rem; gap: 1.8rem; }
+}
+
+.qa-explicit-block {
+  display: flex; flex-direction: column; gap: 0.6rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03); padding-bottom: 2.2rem;
+  &:last-child { border-bottom: none; padding-bottom: 0; }
+
+  // Question Row (Continuous Block Layout)
+  .question-row-node {
+    display: flex; flex-direction: row; justify-content: space-between; align-items: flex-start; gap: 16px;
+
+    .text-cluster {
+      display: flex; flex-direction: row; align-items: flex-start; gap: 10px;
+      
+      .prefix-index {
+        font-family: 'JetBrains Mono', monospace; font-size: 1.1rem; font-weight: 800; color: $glow-blue; flex-shrink: 0;
+      }
+      .explicit-question-string {
+        margin: 0; font-size: 1.1rem; color: $text-bright; font-weight: 700; line-height: 1.4;
+      }
+    }
+
+    .difficulty-flag {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; font-weight: 700; padding: 2px 6px; border-radius: 3px; flex-shrink: 0;
+      &.beginner { background: rgba($glow-green, 0.1); color: $glow-green; }
+      &.intermediate { background: rgba(#f59e0b, 0.1); color: #f59e0b; }
+      &.advanced { background: rgba($glow-red, 0.1); color: $glow-red; }
+    }
+  }
+
+  // Pure Inline Answer Row directly down underneath
+  .answer-row-node {
+    display: flex; flex-direction: column; gap: 6px; padding-left: 2rem;
+    @media (max-width: 500px) { padding-left: 0; margin-top: 4px; }
+
+    .answer-indicator-label {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; color: rgba($text-muted, 0.35); font-weight: 700; letter-spacing: 0.05em;
+    }
+
+    .topics-inline-wrapper {
+      display: flex; flex-wrap: wrap; gap: 6px;
+
+      .explicit-topic-badge {
+        font-size: 0.78rem; color: $text-bright; background: #0c0d14; border: 1px solid rgba(255, 255, 255, 0.05);
+        padding: 4px 10px; border-radius: 4px; font-weight: 600;
+      }
+    }
+  }
+}
+
+// Fallback Framework Loaders
+.contents-loading-screen {
+  min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; background: $bg-void-core; gap: 12px;
+  .cyber-spinner { width: 24px; height: 24px; border: 2px solid rgba(255, 255, 255, 0.03); border-top-color: $glow-purple; border-radius: 50%; animation: frameSpin 0.5s linear infinite; }
+  .cyber-glitch-text { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: $text-muted; }
+}
+
+.contents-error-screen { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; background: $bg-void-core; gap: 8px; color: $glow-red; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; }
+
+@keyframes frameSpin { to { transform: rotate(360deg); } }
