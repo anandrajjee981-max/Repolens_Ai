@@ -5,6 +5,7 @@ import Register from './features/auth/Register';
 import Dashboard from './features/pages/Dashboard';
 import Data from './features/pages/Data';
 import Contents from './features/pages/Contents';
+import Protected from './components/Protected';
 
 export const router = createBrowserRouter([
   {
@@ -21,14 +22,20 @@ export const router = createBrowserRouter([
   },
   {
     path:'/dashboard',
-    element:<Dashboard/>
+    element:<Protected>
+      <Dashboard/>
+    </Protected>
   },
   {
     path : '/library',
-    element : <Data/>
+    element :<Protected>
+       <Data/>
+    </Protected>
   },
   {
     path : '/contents',
-    element : <Contents/>
+    element : <Protected>
+      <Contents/>
+    </Protected>
   }
 ]);

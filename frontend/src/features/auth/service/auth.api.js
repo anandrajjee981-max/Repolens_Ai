@@ -2,8 +2,7 @@ import axios from 'axios'
 
 const api = axios.create({
     withCredentials : true,
-    // ✅ Sahi URL (Slash hata diya localhost aur port ke beech se)
-    baseURL : "http://localhost:3000" 
+    baseURL : "https://repolens-ai-tsjn.onrender.com" 
 })
 
 export async function login(email, password) {
