@@ -11,7 +11,13 @@ if(user){
 const hash = await bcrypt.hash(password,10)
 const newuser = await usermodel.create({username,email,password: hash})
 const token = jwt.sign({id: newuser._id},process.env.JWT_SECRET,{expiresIn: "1d"})
-res.cookie("token",token,{httpOnly: true})  
+
+res.cookie('token', token, {
+    httpOnly: true,    // Prevents XSS attacks
+    secure: true,      // CRITICAL: Must be true for cross-domain cookies (requires HTTPS)
+    sameSite: 'none',  // CRITICAL: Tells the browser it's okay to send this cookie across domains
+    maxAge: 24 * 60 * 60 * 1000 // 1 day
+});
 
 res.status(201).json({message: "User created successfully", user: newuser}) 
 
@@ -34,7 +40,13 @@ async function login(req,res){
         return res.status(400).json({message: "Invalid credentials"})
     }   
     const token = jwt.sign({id: user._id},process.env.JWT_SECRET,{expiresIn: "1d"})
-    res.cookie("token",token,{httpOnly: true})  
+
+res.cookie('token', token, {
+    httpOnly: true,    // Prevents XSS attacks
+    secure: true,      // CRITICAL: Must be true for cross-domain cookies (requires HTTPS)
+    sameSite: 'none',  // CRITICAL: Tells the browser it's okay to send this cookie across domains
+    maxAge: 24 * 60 * 60 * 1000 // 1 day
+}); 
     res.status(200).json({message: "Login successful", user , token})
   }         
     catch (error) {
