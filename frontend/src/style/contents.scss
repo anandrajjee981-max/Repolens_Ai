@@ -47,6 +47,7 @@ $breakpoint-sm: 480px;
 }
 
 .content-dashboard-root {
+  padding: 30px 0px;
   position: relative;
   min-height: 100vh;
   background-color: $bg-void;
@@ -442,10 +443,36 @@ $breakpoint-sm: 480px;
 
   * {
     box-sizing: border-box !important;
-    word-wrap: break-word !important;
     overflow-wrap: break-word !important;
-    white-space: normal !important;
+    word-wrap: break-word !important;
     float: none !important;
+  }
+
+  // FIXED: pre/code need pre-wrap, not normal — "white-space: normal !important"
+  // was collapsing code-block formatting AND was the reason words/code lines
+  // were getting cut mid-word.
+  pre, code {
+    white-space: pre-wrap !important;
+  }
+
+  // FIXED: dark-theme InlineMarkdown helper classes (.md-em-strong, .md-em-code,
+  // .md-em-link) were leaking into the light PDF template since both live
+  // inside .content-dashboard-root. Overriding them here so bold text/inline
+  // code/links are visible (not white-on-white) inside the exported PDF.
+  .md-em-strong { color: #0f172a !important; font-weight: 700 !important; }
+  .md-em-italic { color: #475569 !important; font-style: italic !important; }
+  .md-em-code {
+    font-family: monospace !important;
+    background: #e2e8f0 !important;
+    color: #0f172a !important;
+    padding: 1px 6px !important;
+    border-radius: 4px !important;
+    font-size: 0.92em !important;
+  }
+  .md-em-link {
+    color: #7c3aed !important;
+    text-decoration: underline !important;
+    text-decoration-style: dotted !important;
   }
 
   .pdf-watermark-overlay {

@@ -113,13 +113,25 @@ const Contents = () => {
     }
   };
 
+  // FIXED: line-by-line table stripping instead of a cross-newline regex
+  // that was eating arbitrary chunks of the README (including heading lines),
+  // which is why "##" was showing up as literal text in the rendered output.
   const sanitizeReadme = (text) => {
     if (!text) return '';
-    return text
+
+    const cleanedLines = text.split('\n').filter((line) => {
+      const trimmed = line.trim();
+      // a real markdown table row: "| col | col |"
+      if (/^\|.*\|$/.test(trimmed)) return false;
+      // a table separator row: "|---|:--:|"
+      if (/^[|:\-\s]+$/.test(trimmed) && trimmed.includes('-') && trimmed.includes('|')) return false;
+      return true;
+    });
+
+    return cleanedLines
+      .join('\n')
       .replace(/!\[.*?\]\(.*?\)/g, '')
-      .replace(/\[!\[.*?\]\(.*?\)]\(.*?\)/g, '')
-      .replace(/\|[\s\S]*?\|[\s\S]*?\|/g, '')
-      .replace(/\|.*?\|/g, '')
+      .replace(/\[!\[.*?\]\(.*?\)\]\(.*?\)/g, '')
       .replace(/##\s+License[\s\S]*/gi, '')
       .replace(/###\s+License[\s\S]*/gi, '')
       .replace(/MIT License/gi, '')
@@ -139,6 +151,13 @@ const Contents = () => {
       element.style.position = 'relative';
       element.style.left = '0';
       element.style.width = '780px';
+
+      // FIXED: give the browser a couple of frames to fully commit layout
+      // (fonts, computed styles, table-stripped README reflow) before the
+      // canvas snapshot is taken — avoids half-painted/garbled captures.
+      await new Promise((resolve) =>
+        requestAnimationFrame(() => requestAnimationFrame(resolve))
+      );
 
       const canvas = await html2canvas(element, {
         scale: 2,
